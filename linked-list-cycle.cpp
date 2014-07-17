@@ -1,22 +1,24 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
 class Solution {
 public:
-    int reverse(int x) {
-        if (x == 0)
-            return 0;
-        bool isPositive = x >= 0? true: false;
-        if (!isPositive)
-            x *= -1;
-        vector<int> digits;
-        while (x) {
-            digits.push_back(x % 10);
-            x /= 10;
+    bool hasCycle(ListNode *head) {
+        if (!head)
+            return false;
+        ListNode *fast = head; 
+        ListNode *slow = head;
+        while (fast->next && fast->next->next) {
+            fast = fast->next->next;
+            slow = slow->next;
+            if (fast == slow)
+                return true;
         }
-        vector<int>::iterator it = digits.begin();
-        while (*it == 0)
-            it++;
-        int revInt = 0;
-        while (it < digits.end())
-            revInt = revInt * 10 + *it++;
-        return isPositive? revInt: (-revInt);
+        return false;
     }
 };
